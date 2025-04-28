@@ -1,0 +1,129 @@
+<!-- stereotype_quiz_app/templates/admin_cross.html -->
+{% extends "layout.html" %}
+
+{% block title %}Admin - Cross-State Results{% endblock %}
+
+{% block content %}
+<h1>Admin - Cross-State Quiz Results</h1>
+<p>Displaying data collected from users annotating states other than their own.</p>
+<p><strong>Security Warning:</strong> This page currently has no access control!</p>
+
+{# Display flashed messages if any #}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for category, message in messages %}
+      <li class="flash {{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{# *** Updated Download Buttons *** #}
+<div style="margin: 20px 0; display: flex; gap: 15px; flex-wrap: wrap; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
+    {# Button for Raw Annotations #}
+    <div>
+        <a href="{{ url_for('download_raw_annotations') }}" class="button download-button" style="text-decoration: none; padding: 10px 15px; background-color: #17a2b8; color: white; border-radius: 5px; display: inline-block;">
+            Download Raw Annotations (CSV)
+        </a>
+        <p><small>Direct dump of the 'results_cross' table.</small></p>
+    </div>
+
+    {# Button for Familiarity Ratings #}
+    <div>
+        <a href="{{ url_for('download_familiarity_ratings') }}" class="button download-button" style="text-decoration: none; padding: 10px 15px; background-color: #ffc107; color: #333; border-radius: 5px; display: inline-block;">
+            Download Familiarity Ratings (CSV)
+        </a>
+        <p><small>Direct dump of the 'familiarity_ratings' table.</small></p>
+    </div>
+    {# Removed Processed Data button for now #}
+</div>
+{# *** END DOWNLOAD BUTTONS *** #}
+
+
+{# --- Familiarity Ratings Table --- #}
+<h2 style="margin-top: 30px;">Familiarity Ratings</h2>
+{% if familiarity_ratings %}
+<div class="table-container" style="overflow-x: auto;">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Timestamp</th>
+                <th>User Name</th>
+                <th>Native State</th> {# Annotator's State #}
+                <th>Target State</th> {# State Rated #}
+                <th>Familiarity (0-5)</th>
+                <th>User Age</th>
+                <th>User Sex</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# Loop through familiarity_ratings passed from the route #}
+            {% for row in familiarity_ratings %}
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.timestamp.strftime('%Y-%m-%d %H:%M:%S') if row.timestamp else 'N/A' }}</td>
+                <td>{{ row.user_name | default('N/A', true) }}</td>
+                <td>{{ row.native_state | default('N/A', true) }}</td>
+                <td>{{ row.target_state | default('N/A', true) }}</td>
+                <td style="text-align: center;">{{ row.familiarity_rating if row.familiarity_rating is not none and row.familiarity_rating >= 0 else 'N/A' }}</td>
+                <td>{{ row.user_age | default('N/A', true) }}</td>
+                <td>{{ row.user_sex | default('N/A', true) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p>No familiarity ratings found in the database yet.</p>
+{% endif %}
+
+
+{# --- Raw Annotation Results Table --- #}
+<h2 style="margin-top: 40px;">Raw Annotation Results</h2>
+{% if results %}
+<div class="table-container" style="overflow-x: auto;">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Timestamp</th>
+                <th>User Name</th>
+                <th>Native State</th> {# Annotator's State #}
+                <th>Target State</th> {# State Stereotype is About #}
+                <th>Category</th>
+                <th>Attribute Superset</th>
+                <th>Annotation</th>
+                <th>Offensiveness (0-5)</th>
+                <th>User Age</th>
+                <th>User Sex</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# Loop through results (annotations) passed from the route #}
+            {% for row in results %}
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.timestamp.strftime('%Y-%m-%d %H:%M:%S') if row.timestamp else 'N/A' }}</td>
+                <td>{{ row.user_name | default('N/A', true) }}</td>
+                <td>{{ row.native_state | default('N/A', true) }}</td>
+                <td>{{ row.target_state | default('N/A', true) }}</td>
+                <td>{{ row.category | default('N/A', true) }}</td>
+                <td>{{ row.attribute_superset | default('N/A', true) }}</td>
+                <td>{{ row.annotation | default('N/A', true) }}</td>
+                <td style="text-align: center;">{{ row.offensiveness_rating if row.offensiveness_rating is not none and row.offensiveness_rating >= 0 else ('N/A' if row.offensiveness_rating is none else '-1') }}</td>
+                <td>{{ row.user_age | default('N/A', true) }}</td>
+                <td>{{ row.user_sex | default('N/A', true) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p>No raw annotation results found in the database yet.</p>
+{% endif %}
+
+<p style="margin-top: 20px;"><a href="{{ url_for('index') }}">Back to Home Page</a></p>
+
+{% endblock %}

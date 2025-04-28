@@ -1,0 +1,35 @@
+<!-- stereotype_quiz_app/templates/layout.html -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {# Link to the same CSS file #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {# Title block allows individual pages to set their title #}
+    <title>{% block title %}Cross-State Stereotype Quiz{% endblock %}</title> {# Optional: Default title change #}
+</head>
+<body>
+    <div class="container">
+        <!-- Display Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flashes">
+            {% for category, message in messages %}
+              {# You might want specific CSS classes for flash categories like 'error', 'success', 'warning', 'info' #}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Main Content Block -->
+        {% block content %}
+        {# Specific page content (index_cross, quiz_cross, admin_cross, thank_you) goes here #}
+        {% endblock %}
+    </div>
+
+    {# Optional: Global JS link if needed - currently script linked in quiz_cross.html #}
+    {# <script src="{{ url_for('static', filename='js/script.js') }}"></script> #}
+</body>
+</html>

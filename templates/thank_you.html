@@ -1,0 +1,27 @@
+<!-- stereotype_quiz_app/templates/thank_you.html -->
+{% extends "layout.html" %}
+
+{% block title %}Quiz Completed - Thank You!{% endblock %}
+
+{% block content %}
+    <h1>Thank You, {{ user_name | default('Participant', true) }}!</h1> {# Personalized greeting #}
+
+    {# Display flashed messages if any were passed #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="flash {{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <p>You have successfully completed the Cross-State Stereotype Perception survey.</p>
+    <p>We appreciate you taking the time to provide your valuable insights. Your contribution is important for our research.</p>
+
+    {# Optional: Link back to the start page #}
+    <p style="margin-top: 20px;"><a href="{{ url_for('index') }}">Return to Start Page</a></p>
+    {# Or link to an external site #}
+
+{% endblock %}

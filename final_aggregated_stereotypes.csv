@@ -1,0 +1,94 @@
+Stereotype_State,Category,Attribute,Stereotype_Votes,Not_Stereotype_Votes,Not_Sure_Votes,Average_Offensiveness
+Uttar Pradesh,Clothing,Bangles,0,1,0,
+Uttar Pradesh,Clothing,Dhoti-kurta,0,1,0,
+Uttar Pradesh,Clothing,Heavy jewelry,0,1,0,
+Uttar Pradesh,Clothing,Pagri as a symbol of pride,0,1,0,
+Uttar Pradesh,Clothing,Traditional attire,0,1,0,
+Uttar Pradesh,Clothing,Wearing turbans,0,1,0,
+Uttar Pradesh,Clothing,elderly women with ghoonghat,0,1,0,
+Uttar Pradesh,Clothing,lungi,0,1,0,
+Uttar Pradesh,Clothing,nose rings (nath),0,1,0,
+Uttar Pradesh,Clothing,salwar kameez,0,1,0,
+Uttar Pradesh,Clothing,saree,0,1,0,
+Uttar Pradesh,Clothing,simple footwear (chappals or barefoot),0,1,0,
+Uttar Pradesh,Clothing,traditional headgear,0,1,0,
+Uttar Pradesh,Food and Lifestyle,Elaborate weddings,1,0,0,2.0
+Uttar Pradesh,Food and Lifestyle,Farming,0,0,1,
+Uttar Pradesh,Food and Lifestyle,Grand celebrations,1,0,0,2.0
+Uttar Pradesh,Food and Lifestyle,Roti and sabzi,0,1,0,
+Uttar Pradesh,Food and Lifestyle,Rural lifestyle,0,0,1,
+Uttar Pradesh,Food and Lifestyle,Simple,0,1,0,
+Uttar Pradesh,Food and Lifestyle,engaged in manual labor,0,0,1,
+Uttar Pradesh,Food and Lifestyle,kavi sammelan,1,0,0,2.0
+Uttar Pradesh,Food and Lifestyle,poor migrant workers,0,0,1,
+Uttar Pradesh,Food and Lifestyle,primarily vegetarian,0,1,0,
+Uttar Pradesh,Food and Lifestyle,rich oily food,0,1,0,
+Uttar Pradesh,Food and Lifestyle,spicy diet,0,1,0,
+Uttar Pradesh,Food and Lifestyle,traditional festivals,1,0,0,2.0
+Uttar Pradesh,Others,Crime and corruption,1,0,0,4.0
+Uttar Pradesh,Others,Ethnic conflict,0,1,0,
+Uttar Pradesh,Others,Isolated and remote,0,1,0,
+Uttar Pradesh,Others,Large families,0,1,0,
+Uttar Pradesh,Others,Lawlessness,1,0,0,4.0
+Uttar Pradesh,Others,Nature lovers,0,1,0,
+Uttar Pradesh,Others,Politically unstable,0,1,0,
+Uttar Pradesh,Others,Prefer large families,0,1,0,
+Uttar Pradesh,Others,Remote location,0,1,0,
+Uttar Pradesh,Others,Strong affinity for wildlife,0,1,0,
+Uttar Pradesh,Others,caste-based crime,1,0,0,4.0
+Uttar Pradesh,Others,disconnected from mainstream,0,1,0,
+Uttar Pradesh,Others,environmental consciousness,0,1,0,
+Uttar Pradesh,Others,forest conservation,0,1,0,
+Uttar Pradesh,Others,insurgency,0,1,0,
+Uttar Pradesh,Others,issues of immigration,0,1,0,
+Uttar Pradesh,Others,less concern for family planning,0,1,0,
+Uttar Pradesh,Others,limited connectivity,0,1,0,
+Uttar Pradesh,Others,politically opportunistic,1,0,0,4.0
+Uttar Pradesh,Personality,Aggressive and confrontational,1,0,0,4.0
+Uttar Pradesh,Personality,Caste-based discrimination,0,1,0,
+Uttar Pradesh,Personality,Caste-conscious,0,1,0,
+Uttar Pradesh,Personality,Deeply involved in politics,0,1,0,
+Uttar Pradesh,Personality,Highly religious,0,1,0,
+Uttar Pradesh,Personality,Lacking access to modern education,0,1,0,
+Uttar Pradesh,Personality,Overly devout Hindus,0,1,0,
+Uttar Pradesh,Personality,Patriarchal family structures,1,0,0,3.0
+Uttar Pradesh,Personality,Politically dominant,0,1,0,
+Uttar Pradesh,Personality,Proud of Hindi,0,1,0,
+Uttar Pradesh,Personality,Resistant to other languages,0,1,0,
+Uttar Pradesh,Personality,Rough,1,0,0,4.0
+Uttar Pradesh,Personality,Socially conservative,1,0,0,3.0
+Uttar Pradesh,Personality,Uneducated and rural,0,1,0,
+Uttar Pradesh,Personality,backward mindset,0,1,0,
+Uttar Pradesh,Personality,caste-based politics,0,1,0,
+Uttar Pradesh,Personality,caste-based voting,0,1,0,
+Uttar Pradesh,Personality,hardworking,1,0,0,4.0
+Uttar Pradesh,Personality,loud,1,0,0,4.0
+Uttar Pradesh,Personality,overly devout Muslims,0,1,0,
+Uttar Pradesh,Personality,power struggles,0,1,0,
+Uttar Pradesh,Personality,rigid gender roles,0,1,0,
+Uttar Pradesh,Personality,social hierarchies,0,1,0,
+Uttar Pradesh,Personality,strong focus on Hindi literature,0,1,0,
+Uttar Pradesh,Personality,women confined to domestic duties,1,0,0,3.0
+Uttar Pradesh,Physical Appearance,Bullock carts,0,1,0,
+Uttar Pradesh,Physical Appearance,Darker skin tone,1,0,0,2.0
+Uttar Pradesh,Physical Appearance,Men with mustaches,0,1,0,
+Uttar Pradesh,Physical Appearance,Rural aesthetic,0,1,0,
+Uttar Pradesh,Physical Appearance,Strong,1,0,0,2.0
+Uttar Pradesh,Physical Appearance,Traditional appearance,0,1,0,
+Uttar Pradesh,Physical Appearance,barefoot villagers,0,1,0,
+Uttar Pradesh,Physical Appearance,long black braided hair,1,0,0,2.0
+Uttar Pradesh,Physical Appearance,rural men wearing gamcha,0,1,0,
+Uttar Pradesh,Physical Appearance,simple village life,0,1,0,
+Uttar Pradesh,Physical Appearance,stocky build,1,0,0,2.0
+Uttar Pradesh,Physical Appearance,women with bindi,0,1,0,
+Uttar Pradesh,Work and Jobs,Associated with pilgrimage sites,0,1,0,
+Uttar Pradesh,Work and Jobs,Low-skilled migrant workers,0,1,0,
+Uttar Pradesh,Work and Jobs,Poor infrastructure,0,1,0,
+Uttar Pradesh,Work and Jobs,Primarily agriculture,0,1,0,
+Uttar Pradesh,Work and Jobs,Religious tourism,0,1,0,
+Uttar Pradesh,Work and Jobs,Underdeveloped roads,0,1,0,
+Uttar Pradesh,Work and Jobs,economically challenged,0,1,0,
+Uttar Pradesh,Work and Jobs,farming,0,1,0,
+Uttar Pradesh,Work and Jobs,inefficient bureaucracy,0,1,0,
+Uttar Pradesh,Work and Jobs,limited healthcare,0,1,0,
+Uttar Pradesh,Work and Jobs,manual labor,0,1,0,

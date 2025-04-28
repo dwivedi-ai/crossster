@@ -1,0 +1,78 @@
+<!-- stereotype_quiz_app/templates/index_cross.html -->
+{% extends "layout.html" %}
+
+{% block title %}User Information - Cross-State Stereotype Quiz{% endblock %}
+
+{% block content %}
+    <h1>Cross-State Stereotype Perception Survey</h1>
+    <p>
+        Thank you for participating! In this survey, you will be asked about stereotypes associated
+        with Indian states/UTs **other than your own**.
+    </p>
+    <p>
+        Please provide some basic information to begin. Your anonymous responses will be used
+        to create a dataset for research purposes.
+    </p>
+
+    {# Display flashed messages #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="flash {{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {# The action should point to the route handling the POST for this page (likely 'index') #}
+    <form action="{{ url_for('index') }}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required value="{{ form_data.get('name', '') }}">
+        </div>
+
+        <div class="form-group">
+            {# Changed label and name to 'native_state' #}
+            <label for="native_state">Your Native State/UT:</label>
+            <select id="native_state" name="native_state" required>
+                <option value="" disabled {% if not form_data.get('native_state') %}selected{% endif %}>-- Select your Native State/UT --</option>
+                {% if states == ['Error: Check Logs'] %}
+                 <option value="" disabled>Error loading states!</option>
+                {% else %}
+                 {% for state in states %}
+                    {# Preserve selection on error #}
+                    <option value="{{ state }}" {% if state == form_data.get('native_state') %}selected{% endif %}>{{ state }}</option>
+                 {% endfor %}
+                {% endif %}
+            </select>
+             {% if states == ['Error: Check Logs'] %}
+                <p class="error">Could not load the list of states. Please check application logs.</p>
+             {% endif %}
+             <small>You will be asked about stereotypes associated with states/UTs <em>other</em> than this one.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="1" placeholder="Enter your age (optional)" value="{{ form_data.get('age', '') }}">
+        </div>
+
+        <div class="form-group">
+            <label>Sex: <span class="required-indicator">*</span></label> {# Indicate required #}
+             {# Use form_data to re-select radio button on error #}
+             {% set selected_sex = form_data.get('sex') %}
+            <div>
+                {# Added 'required' to the group - ensures one must be checked #}
+                <input type="radio" id="male" name="sex" value="Male" {% if selected_sex == 'Male' %}checked{% endif %} required>
+                <label for="male">Male</label>
+            </div>
+            <div>
+                <input type="radio" id="female" name="sex" value="Female" {% if selected_sex == 'Female' %}checked{% endif %} required>
+                <label for="female">Female</label>
+            </div>
+             {# Removed 'Other' and 'Prefer not to say' options #}
+        </div>
+
+        <button type="submit">Start Quiz</button>
+    </form>
+{% endblock %}

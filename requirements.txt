@@ -1,0 +1,5 @@
+Flask>=2.0      # Core web framework
+gunicorn        # WSGI HTTP Server for production (Unix-like systems)
+pandas          # For data processing script (process_results.py)
+numpy           # Dependency for pandas, used for NaN handling
+mysql-connector-python
