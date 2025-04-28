@@ -1,4 +1,4 @@
-<!-- stereotype_quiz_app/templates/quiz_cross.html -->
+<!-- stereotype_quiz_app/templates/quiz.html -->
 {% extends "layout.html" %}
 
 {% block title %}Quiz - Annotating {{ target_state }}{% endblock %}
@@ -9,21 +9,30 @@
     {# Clearly indicate the state being evaluated and progress #}
     <h2>Target State: {{ target_state }} ({{ current_index + 1 }} of {{ total_states }})</h2>
     <p class="instructions">
-        Please answer the questions below regarding your perceptions of stereotypes associated with **{{ target_state }}**.
+        Please answer the questions below regarding your perceptions of stereotypes associated with <strong>{{ target_state }}</strong>.
+        Fields marked with <span class="required-indicator">*</span> are required.
     </p>
     <hr style="border-top: 3px double #eee; margin: 25px 0;">
 
     {# The form now POSTs back to the 'quiz_cross' route to handle saving and advancing #}
     <form action="{{ url_for('quiz_cross') }}" method="post" id="quiz-form">
 
+        {# *********************************************************** #}
+        {# *** CRITICAL FIX: Add hidden input for number of items *** #}
+        {# This value is read by the Flask backend to know how many items to process #}
+        <input type="hidden" name="num_quiz_items" value="{{ num_quiz_items }}">
+        {# *********************************************************** #}
+
+
         {# --- Familiarity Rating Section --- #}
         <fieldset class="familiarity-rating">
             <legend>Familiarity with {{ target_state }}: <span class="required-indicator">*</span></legend>
             <p><small>How familiar are you with {{ target_state }} and its culture/people?</small></p>
             <div class="rating-options"> {# Re-using rating-options class for layout #}
-                {% for i in range(6) %}
+                {% for i in range(6) %} {# 0 to 5 #}
                 <div class="rating-option">
                      {# Name this input 'familiarity_rating' #}
+                     {# Add required attribute for browser-level validation #}
                     <input type="radio" id="fam_{{ i }}" name="familiarity_rating" value="{{ i }}" required>
                     <label for="fam_{{ i }}">
                         {{ i }}
@@ -46,33 +55,37 @@
         {# --- Stereotype Questions Section --- #}
         <h3>Stereotype Annotations for {{ target_state }}:</h3>
         <p class="instructions">
-            Indicate if you consider the following a stereotype associated with {{ target_state }}.
-            If yes, please rate its offensiveness (0=Not at all, 5=Very).
+            For each item below, please indicate if you consider it a stereotype associated with <strong>{{ target_state }}</strong>.
+            If you select 'Stereotype', please also rate how offensive you find it (0=Not at all, 5=Very).
         </p>
 
         {# Check if there are any stereotypes loaded for this specific target state #}
         {% if not quiz_items %}
             <p class="info">
-                No specific stereotypes were found in the dataset for **{{ target_state }}**.
-                Please rate your familiarity above and click 'Next State' or 'Finish'.
+                No specific stereotype items were found in the dataset for <strong>{{ target_state }}</strong>.
+                Please rate your familiarity above and click the button below to proceed.
             </p>
         {% else %}
             {# Loop through the stereotypes for the current target state #}
+            {# Use loop.index0 for 0-based indexing consistent with backend #}
             {% for item in quiz_items %}
             <div class="quiz-item" id="item-{{ loop.index0 }}">
-                {# Display Superset and Category #}
+                {# Display Superset (the stereotype text) and Category #}
+                {# Using loop.index (1-based) for display numbering #}
                 <h4>{{ loop.index }}. {{ item.superset }}</h4>
                 <p><em>Category: {{ item.category }}</em></p>
 
                 {# Hidden fields for this specific item's data (superset, category) #}
                 {# These are needed when POSTing to identify which item was annotated #}
+                {# Ensure values are properly HTML-escaped (Flask does this by default with {{ }}) #}
                 <input type="hidden" name="superset_{{ loop.index0 }}" value="{{ item.superset }}">
                 <input type="hidden" name="category_{{ loop.index0 }}" value="{{ item.category }}">
 
                 {# Subset Toggle (optional details) - Logic remains the same #}
                 {% if item.subsets %}
-                    <button type="button" class="toggle-subsets" data-target="subsets-{{ loop.index0 }}">Show Details</button>
-                    <div id="subsets-{{ loop.index0 }}" class="subsets-list" style="display: none;">
+                    {# Add ARIA attributes for accessibility #}
+                    <button type="button" class="toggle-subsets" data-target="subsets-{{ loop.index0 }}" aria-expanded="false" aria-controls="subsets-{{ loop.index0 }}">Show Details</button>
+                    <div id="subsets-{{ loop.index0 }}" class="subsets-list" style="display: none;" role="region" aria-hidden="true">
                         <p>Associated terms/examples:</p>
                         <ul>
                             {% for subset in item.subsets %}<li>{{ subset }}</li>{% endfor %}
@@ -81,8 +94,11 @@
                 {% endif %}
 
                 {# Annotation Radio Buttons #}
+                {# Use fieldset and legend for better structure and accessibility #}
                 <fieldset class="annotation-options" data-question-index="{{ loop.index0 }}">
+                    {# Legend clearly states the purpose #}
                     <legend>Annotation: <span class="required-indicator">*</span></legend>
+                    {# Add required attribute to enforce selection client-side #}
                     <div>
                         <input type="radio" id="anno_s_{{ loop.index0 }}" name="annotation_{{ loop.index0 }}" value="Stereotype" required>
                         <label for="anno_s_{{ loop.index0 }}">Stereotype</label>
@@ -97,21 +113,27 @@
                     </div>
                 </fieldset>
 
-                {# Offensiveness Rating Section (conditionally shown by JS) #}
+                {# Offensiveness Rating Section (conditionally shown/required by JS) #}
+                {# Container ID matches JS expectations #}
                 <div class="offensiveness-rating-container" id="rating_container_{{ loop.index0 }}" style="display: none;">
+                     {# Use fieldset/legend here too #}
                     <fieldset>
+                        {# Legend includes required indicator, dynamically relevant via JS #}
                         <legend>How offensive is this stereotype? <span class="required-indicator">*</span></legend>
                         <small>(0 = Not at all offensive, 5 = Very offensive)</small>
                         <div>
-                            {% set outer_loop_index = loop.index0 %}
+                            {# Use a consistent class for styling rating options #}
                             <div class="rating-options">
+                                {# Inner loop for 0-5 rating #}
                                 {% for i in range(6) %}
                                 <div class="rating-option">
-                                    <input type="radio" id="off_{{ i }}_{{ outer_loop_index }}" name="offensiveness_{{ outer_loop_index }}" value="{{ i }}">
-                                    <label for="off_{{ i }}_{{ outer_loop_index }}">{{ i }}</label>
+                                     {# Name includes outer loop index to group correctly per item #}
+                                     {# 'required' attribute will be added/removed by JS #}
+                                    <input type="radio" id="off_{{ i }}_{{ loop.index0 }}" name="offensiveness_{{ loop.index0 }}" value="{{ i }}">
+                                    <label for="off_{{ i }}_{{ loop.index0 }}">{{ i }}</label>
                                 </div>
-                                {% endfor %}
-                            </div>
+                                {% endfor %} {# End inner rating loop #}
+                            </div> {# End rating-options #}
                         </div>
                     </fieldset>
                 </div>{# End Offensiveness Rating Section #}
@@ -122,19 +144,20 @@
 
         {# --- Submission Button --- #}
         <div style="text-align: center; margin-top: 30px;">
-            <button type="submit">
-                {# Change button text for the last state #}
+            <button type="submit" class="submit-button">
+                {# Change button text dynamically based on whether it's the last state #}
                 {% if is_last_state %}
                     Finish Quiz
                 {% else %}
-                    Save and Go to Next State →
+                    Save and Go to Next State → {# HTML arrow entity #}
                 {% endif %}
             </button>
         </div>
 
     </form> {# End main form #}
 
-    {# Link to the JavaScript file (assuming it handles the conditional display logic) #}
+    {# Link to the JavaScript file (ensure it's correctly placed in static/js) #}
+    {# Using url_for ensures the correct path regardless of app deployment structure #}
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 {% endblock %}
